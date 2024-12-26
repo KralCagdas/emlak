@@ -1,0 +1,120 @@
+@{
+    Layout = "_LayoutAdmin";
+}
+
+@section CardHeader {
+    <span>Anasayfa</span>
+}
+
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-md-12 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                        <a asp-controller="User" asp-action="Index" class="text-primary">TOPLAM KULLANICI SAYISI</a>
+                    </div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalUsers</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                        <a asp-controller="Product" asp-action="Index" class="text-success">TOPLAM ÝLAN SAYISI</a>
+                    </div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalListings</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-12 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                <a asp-controller="Category" asp-action="Index" class="text-info">TOPLAM KATEGORÝ SAYISI</a>
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="catCount"></div>
+                        </div>                       
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div id="divResult"></div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Sayfa yüklendiðinde kategori sayýsýný al
+        $(document).ready(function () {
+            $.ajax({
+                url: '/Category/GetCategoryCount', // API veya Controller'daki Action URL'si
+                method: 'GET',
+                success: function (data) {
+                    $("#catCount").html(data);
+                },
+                error: function () {
+                    console.error("Kategori sayýsý alýnamadý.");
+                }
+            });
+        });
+
+        // HUB Baðlantý
+        var connectionHub = new signalR.HubConnectionBuilder()
+            .withUrl("/general-hub", signalR.HttpTransportType.WebSockets)
+            .configureLogging(signalR.LogLevel.Information)
+            .build();
+
+        // Category HUB
+        connectionHub.on("onCategoryAdd", (d) => {
+            $("#catCount").html(d);
+            $("#divResult")
+                .show()
+                .removeClass()
+                .addClass("alert alert-info")
+                .html("Kategori Eklendi")
+                .fadeOut(5000);
+        });
+        connectionHub.on("onCategoryUpdate", (d) => {
+            $("#catCount").html(d);
+            $("#divResult")
+                .show()
+                .removeClass()
+                .addClass("alert alert-info")
+                .html("Kategori Güncellendi")
+                .fadeOut(5000);
+        });
+        connectionHub.on("onCategoryDelete", (d) => {
+            $("#catCount").html(d);
+            $("#divResult")
+                .show()
+                .removeClass()
+                .addClass("alert alert-info")
+                .html("Kategori Silindi")
+                .fadeOut(5000);
+        });
+
+        // start connection
+        function fullfilled() {
+            console.log("Baðlantý Baþarýlý");
+        }
+        function rejected() {
+            console.log("Baðlantý Hatalý");
+        }
+        connectionHub.start().then(fullfilled, rejected);
+
+    </script>
+}

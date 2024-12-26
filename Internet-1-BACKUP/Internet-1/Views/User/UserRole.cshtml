@@ -1,0 +1,81 @@
+﻿@{
+    ViewData["Title"] = "Role";
+
+
+
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section CardHeader {
+    <span>Kullanıcı Yetkileri</span>
+}
+@model List<UserRoleModel>
+
+<div class="row g-4 align-items-stretch">
+    <div class="col-md-6 col-12">
+        <div class="card h-100 shadow-sm">
+            <div class="card-header bg-primary text-white text-center">
+                <h5 class="m-0">Mevcut Yetkiler</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped table-bordered">
+                    <tbody>
+                        @foreach (var item in Model)
+
+                        {
+                            @if (item.IsInRole)
+
+                            {
+                                <tr>
+                                    <td class="font-weight-bold">
+                                        <span class="badge @(item.RoleName == "Uye" ? "bg-info" : "bg-success") text-white p-2 rounded-pill">
+                                            @(item.RoleName == "Uye" ? "Kullanıcı" : item.RoleName)
+                                        </span>
+                                    </td>
+                                    <td class="text-end">
+                                        <a asp-action="UserRoleDelete" class="btn btn-outline-danger btn-sm" asp-route-id="@item.RoleId" asp-route-userId="@item.UserId">
+                                            <i class="fas fa-trash-alt"></i> Sil
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-12">
+        <div class="card h-100 shadow-sm">
+            <div class="card-header bg-primary text-white text-center">
+                <h5 class="m-0">Yetki Ekle</h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped table-bordered">
+                    <tbody>
+                        @foreach (var item in Model)
+
+                        {
+                            @if (!item.IsInRole)
+
+                            {
+                                <tr>
+                                    <td class="font-weight-bold">
+                                        <span class="badge @(item.RoleName == "Uye" ? "bg-info" : "bg-success") text-white p-2 rounded-pill">
+                                            @(item.RoleName == "Uye" ? "Kullanıcı" : item.RoleName)
+                                        </span>
+                                    </td>
+                                    <td class="text-end">
+                                        <a asp-action="UserRoleAdd" class="btn btn-outline-primary btn-sm" asp-route-id="@item.RoleId" asp-route-userId="@item.UserId">
+                                            <i class="fas fa-user-plus"></i> Ekle
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

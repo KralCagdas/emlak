@@ -1,0 +1,78 @@
+﻿@{
+    ViewData["Title"] = "Anasayfa";
+}
+
+<!-- Hero Section -->
+<div class="hero-section text-center p-5" style="background: linear-gradient(to right, #007bff, #0056b3); color: white; border-radius: 40px; box-shadow: 0px 6px 25px rgba(0, 0, 0, 0.15);">
+    <div class="container">
+        <h1 class="display-3 fw-bold mb-3">Emlak Portalı</h1>
+        <p class="lead mb-4">Türkiye'nin dört bir yanından satılık ve kiralık ilanlar sizi bekliyor. Hayalinizdeki evi bulun!</p>
+        <a class="btn explore-btn btn-lg mt-3 px-5" href="/Listings/All" role="button">Tüm İlanları Keşfet</a>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="container my-5">
+    <div class="row text-center g-4">
+        <div class="col-md-4">
+            <div class="feature-card p-4 rounded" style="background-color: #f8f9fa; box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);">
+                <i class="fas fa-search-location fa-3x text-primary mb-3"></i>
+                <h5 class="fw-bold">Geniş Seçenekler</h5>
+                <p>Binlerce farklı ilan arasından size en uygun olanı seçin.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card p-4 rounded" style="background-color: #f8f9fa; box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);">
+                <i class="fas fa-user-shield fa-3x text-primary mb-3"></i>
+                <h5 class="fw-bold">Güvenilir Kullanıcılar</h5>
+                <p>Onaylı kullanıcılar ile emlak işlemlerinizi güvenle yapın.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card p-4 rounded" style="background-color: #f8f9fa; box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);">
+                <i class="fas fa-mobile-alt fa-3x text-primary mb-3"></i>
+                <h5 class="fw-bold">Kullanıcı Dostu</h5>
+                <p>Kullanımı kolay arayüzü sayesinde aradığınızı hızlıca bulun.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Admin Call-to-Action Section -->
+<div class="cta-section text-center py-5" style="background: linear-gradient(to left, #f8f9fa, #e9ecef); border-radius: 40px; box-shadow: 0px 6px 25px rgba(0, 0, 0, 0.1);">
+    <div class="container">
+        <h2 class="fw-bold mb-3">Satışa ve Kiralamaya Hazır Mısınız?</h2>
+        <p class="lead mb-4">Evinizi veya iş yerinizi hızlı bir şekilde satmak ya da kiralamak istiyorsanız, hemen ilanınızı oluşturun ve doğru müşterilere ulaşın!</p>
+        <a class="btn explore-btn btn-lg px-5" href="/Admin" role="button">Admin Paneline Git</a>
+    </div>
+</div>
+
+<!-- CSS -->
+<style>
+    .hero-section {
+        margin-bottom: 50px;
+        padding: 60px 30px;
+    }
+
+    .feature-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+    .explore-btn {
+        background-color: white;
+        color: #007bff;
+        border: 2px solid white;
+        transition: all 0.3s ease;
+    }
+
+        .explore-btn:hover {
+            background-color: #6c757d;
+            color: #fff;
+            border-color: #6c757d;
+        }
+</style>

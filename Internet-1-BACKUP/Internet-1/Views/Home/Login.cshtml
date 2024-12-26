@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "Giriş Yap";
+}
+@model LoginModel
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card shadow-lg border-0" style="width: 100%; max-width: 400px; border-radius: 20px;">
+        <div class="card-body">
+            <h3 class="text-center text-primary mb-3" style="font-weight: 600;">Hoş Geldiniz!</h3>
+            <p class="text-center text-muted mb-3" style="font-size: 14px;">Emlak Portalı'na giriş yaparak avantajları keşfedin.</p>
+            <form method="post" asp-action="Login" asp-controller="Home">
+                <div class="form-group mb-3">
+                    <input type="text" name="username" class="form-control rounded-pill p-2 fs-6" placeholder="Kullanıcı Adı" required>
+                </div>
+                <div class="form-group mb-4">
+                    <input type="password" name="password" class="form-control rounded-pill p-2 fs-6" placeholder="Şifre" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block w-100 rounded-pill p-2 fs-6" style="font-weight: 600;">Giriş Yap</button>
+            </form>
+            <div class="mt-3 text-center">
+                <p class="text-muted" style="font-size: 14px;">Hesabınız yok mu? <a href="/Home/Register" class="text-primary fw-bold">Kayıt Ol</a></p>
+            </div>
+        </div>
+    </div>
+</div>

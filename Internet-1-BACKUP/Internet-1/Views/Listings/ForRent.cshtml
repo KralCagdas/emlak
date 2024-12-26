@@ -1,0 +1,108 @@
+﻿@model IEnumerable<Internet_1.Models.Product>
+
+@{
+    ViewData["Title"] = "Kiralık İlanlar";
+}
+
+<div class="container my-5">
+    <!-- Sayfa Başlığı -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-primary">Kiralık İlanlar</h1>
+        <p class="lead text-secondary">Hayalinizdeki evi kolayca bulun. Farklı şehirlerdeki kiralık ilanları inceleyin ve size en uygun olanı seçin.</p>
+    </div>
+
+    <!-- Şehir Filtreleme -->
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-6">
+            <div class="input-group shadow-sm">
+                <label class="input-group-text bg-primary text-white fw-bold" for="cityFilter">Şehir:</label>
+                <select id="cityFilter" class="form-select">
+                    <option value="">Tüm Şehirler</option>
+                    @foreach (var city in ViewBag.Cities)
+                    {
+                        <option value="@city.Value">@city.Text</option>
+                    }
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- İlanlar Listesi -->
+    <div id="listingContainer" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-lg border-0">
+                    <!-- Fotoğraf -->
+                    @if (!string.IsNullOrEmpty(item.PhotoUrl) && !item.PhotoUrl.Contains("no-img.png"))
+                    {
+                        <img src="@item.PhotoUrl" class="card-img-top" alt="@item.Name" style="height: 200px; object-fit: cover; border-radius: 10px;">
+                    }
+                    else
+                    {
+                        <div class="image-placeholder bg-light d-flex align-items-center justify-content-center" style="height: 200px; border-radius: 10px;">
+                            <span class="text-muted">Fotoğraf Yok</span>
+                        </div>
+                    }
+
+                    <!-- İlan Bilgileri -->
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title text-primary fw-bold">@item.Name</h5>
+                        <p class="card-text mb-1"><strong>Fiyat:</strong> @item.Price.ToString("C")</p>
+                        <p class="card-text mb-1"><strong>Şehir:</strong> @item.City</p>
+                        <p class="card-text mb-2">
+                            <span class="badge bg-primary">Kiralık</span>
+                        </p>
+                        <p class="card-text text-muted small">@item.Description</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Ajax Script -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#cityFilter').change(function () {
+            var selectedCity = $(this).val();
+            var category = "Kiralık"; // Sabit kategori
+
+            $.ajax({
+                url: '/Listings/GetListingsByCity',
+                type: 'GET',
+                data: { city: selectedCity, category: category }, // Kategori bilgisi gönderiliyor
+                success: function (response) {
+                    var container = $('#listingContainer');
+                    container.empty();
+
+                    if (response.length > 0) {
+                        response.forEach(function (item) {
+                            var categoryBadge = `<span class="badge bg-primary">Kiralık</span>`;
+                            var card = `
+                                        <div class="col">
+                                            <div class="card h-100 shadow-lg border-0">
+                                                <img src="${item.photoUrl || '/images/no-img.png'}" class="card-img-top" alt="${item.name}" style="height: 200px; object-fit: cover; border-radius: 10px;">
+                                                <div class="card-body d-flex flex-column">
+                                                    <h5 class="card-title text-primary fw-bold">${item.name}</h5>
+                                                    <p class="card-text mb-1"><strong>Fiyat:</strong> ${item.price}</p>
+                                                    <p class="card-text mb-1"><strong>Şehir:</strong> ${item.city}</p>
+                                                    <p class="card-text mb-2">${categoryBadge}</p>
+                                                    <p class="card-text text-muted small">${item.description}</p>
+                                                </div>
+                                            </div>
+                                        </div>`;
+                            container.append(card);
+                        });
+                    } else {
+                        container.html('<p class="text-center text-muted">Seçilen şehirde ilan bulunamadı.</p>');
+                    }
+                },
+                error: function () {
+                    alert('Bir hata oluştu. Lütfen tekrar deneyin.');
+                }
+            });
+        });
+    });
+</script>

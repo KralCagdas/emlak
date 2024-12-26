@@ -1,0 +1,74 @@
+﻿<ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background: linear-gradient(to bottom, #1d3557, #457b9d); box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); border-right: 1px solid rgba(255, 255, 255, 0.1);">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" asp-controller="Admin" asp-action="Index">
+        <div class="sidebar-brand-icon">
+            <i class="fas fa-cogs" style="font-size: 24px; color: #f1faee;"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3" style="color: #f1faee; font-weight: bold;">ADMIN PANELİ</div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0" style="border-color: rgba(255, 255, 255, 0.2);">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item">
+        <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Index" && ViewContext.RouteData.Values["controller"]?.ToString() == "Admin" ? "active" : "")" asp-controller="Admin" asp-action="Index">
+            <i class="fas fa-home"></i>
+            <span>Ana Sayfa</span>
+        </a>
+    </li>
+    @if (User.IsInRole("Admin"))
+
+    {
+        <li class="nav-item">
+            <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Index" && ViewContext.RouteData.Values["controller"]?.ToString() == "User" ? "active" : "")" asp-controller="User" asp-action="Index">
+                <i class="fas fa-fw fa-user"></i>
+                <span>Kullanıcılar</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Index" && ViewContext.RouteData.Values["controller"]?.ToString() == "Category" ? "active" : "")" asp-controller="Category" asp-action="Index">
+                <i class="fas fa-th-large"></i>
+                <span>Kategoriler</span>
+            </a>
+        </li>
+    }
+    <li class="nav-item">
+        <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Index" && ViewContext.RouteData.Values["controller"]?.ToString() == "Product" ? "active" : "")" asp-controller="Product" asp-action="Index">
+            <i class="fas fa-book"></i>
+            <span>İlanlar</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Index" && ViewContext.RouteData.Values["controller"]?.ToString() == "Todo" ? "active" : "")" asp-controller="Todo" asp-action="Index">
+            <i class="fas fa-tasks"></i>
+            <span>Yapılacaklar</span>
+        </a>
+    </li>
+
+    <!-- Yeni Menü Öğesi -->
+    <hr class="sidebar-divider my-0" style="border-color: rgba(255, 255, 255, 0.2);">
+    <li class="nav-item">
+        <a class="nav-link @(ViewContext.RouteData.Values["action"]?.ToString() == "Index" && ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")" asp-controller="Home" asp-action="Index">
+            <i class="fas fa-arrow-left"></i>
+            <span>Emlak Portalı</span>
+        </a>
+    </li>
+</ul>
+
+<style>
+    /* Hover ile yazıyı daha belirgin yapma */
+    .nav-item .nav-link:hover span {
+        color: #ffffff;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+
+    /* Aktif sayfanın belirgin görünümü */
+    .nav-item .nav-link.active {
+        color: #ffffff !important;
+        font-weight: bold;
+    }
+
+</style>
